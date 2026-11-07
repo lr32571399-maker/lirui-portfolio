@@ -52,7 +52,7 @@
   };
   const src = page => typeof page === 'number'
     ? `assets/works/page-${page}.webp`
-    : page === 'discover' ? 'assets/works/tongpin/discover-20261107.png'
+    : page === 'discover' ? 'assets/works/tongpin/discover-20261107-v2.png'
     : `assets/works/tongpin/${page}.jpg`;
   function workImage(page, alt, eager = false) {
     const img = new Image();
@@ -60,8 +60,8 @@
     img.alt = alt;
     img.loading = eager ? 'eager' : 'lazy';
     if (tongpinHeights[page]) {
-      img.width = 3840;
-      img.height = tongpinHeights[page];
+      img.width = page === 'discover' ? 1899 : 3840;
+      img.height = page === 'discover' ? 2232 : tongpinHeights[page];
     }
     return img;
   }
