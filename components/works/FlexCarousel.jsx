@@ -481,8 +481,12 @@ const FlexCarousel = ({
       const image = new Image();
       image.crossOrigin = 'anonymous';
       image.decoding = 'async';
+      let retryTimer = 0;
+      let attempts = 0;
+      let disposed = false;
       image.onload = () => {
-        if (!alive || !slots.includes(slot)) return;
+        if (!alive || disposed || !slots.includes(slot)) return;
+        slot.failed = false;
         texture.image = image;
         texture.update();
         slot.image = [image.naturalWidth || 1, image.naturalHeight || 1];
@@ -511,13 +515,23 @@ const FlexCarousel = ({
         start();
       };
       image.onerror = () => {
-        if (!alive) return;
+        if (!alive || disposed) return;
         slot.failed = true;
         dirty = true;
         start();
+        if (attempts < 3) {
+          retryTimer = setTimeout(() => {
+            if (!alive || disposed) return;
+            const url = new URL(item.src, document.baseURI);
+            url.searchParams.set('image_retry', String(++attempts));
+            image.src = url.href;
+          }, 1000 * (attempts + 1));
+        }
       };
       image.src = item.src;
       slot.dispose = () => {
+        disposed = true;
+        clearTimeout(retryTimer);
         image.onload = null;
         image.onerror = null;
         gl.deleteTexture(texture.texture);

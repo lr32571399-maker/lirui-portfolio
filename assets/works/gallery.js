@@ -885,7 +885,7 @@
       return;
     }
     unmount = window.mountPortfolioCarousel(track, works.map(([title, page]) => ({
-      title, alt: title, src: src(page)
+      title, alt: title, src: page === 'cover' ? 'assets/works/tongpin/cover-preview.webp' : src(page)
     })), update);
   };
 })();
