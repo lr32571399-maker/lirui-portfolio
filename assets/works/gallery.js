@@ -52,6 +52,7 @@
   };
   const src = page => typeof page === 'number'
     ? `assets/works/page-${page}.webp`
+    : page === 'discover' ? 'assets/works/tongpin/discover-20261107.png'
     : `assets/works/tongpin/${page}.jpg`;
   function workImage(page, alt, eager = false) {
     const img = new Image();
