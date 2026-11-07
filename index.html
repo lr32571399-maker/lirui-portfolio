@@ -256,28 +256,39 @@
   function sourceIndex(track=active){const i=track.video.currentTime*config.fps;return clamp(track.sign===1?i:config.frames-1-i,0,config.frames-1);}
   function syncPhase(){phase+=delta(phaseAt(sourceIndex()),phase);}
   function seek(v,time){if(Math.abs(v.currentTime-time)<.008&&!v.seeking)return;v.currentTime=time;metrics.seeks++;}
-  function waitFrame(v,time){
+  function waitFrame(v,time,timeoutMs=30000){
     return new Promise((resolve,reject)=>{
       const cleanup=()=>{clearTimeout(timer);for(const e of ['loadeddata','seeked','canplay'])v.removeEventListener(e,check);v.removeEventListener('error',fail);};
       const check=()=>{if(v.readyState>=2&&!v.seeking&&(time===undefined||Math.abs(v.currentTime-time)<.021)){cleanup();resolve();}};
       const fail=()=>{cleanup();reject(Error('video decode unavailable'));};
-      const timer=setTimeout(fail,5000);for(const e of ['loadeddata','seeked','canplay'])v.addEventListener(e,check);v.addEventListener('error',fail);check();
+      const timer=setTimeout(fail,timeoutMs);for(const e of ['loadeddata','seeked','canplay'])v.addEventListener(e,check);v.addEventListener('error',fail);check();
     });
   }
   function play(v){
     if(blocked||playing.has(v)||!v.paused||document.hidden||reduced.matches)return;
     playing.add(v);v.play().catch(()=>{blocked=true;document.getElementById('media-error').textContent='视频播放受限，点击页面重试';}).finally(()=>playing.delete(v));
   }
+  let loadRetry=0,networkRetries=0;
+  function retryLoad(){
+    if(ready||loading||loadRetry||document.hidden)return;
+    loadRetry=setTimeout(()=>{loadRetry=0;load();},1500);
+  }
   async function load(){
     if(ready||loading||!fine.matches||reduced.matches)return;
     loading=true;status.textContent='正在加载 1920×1080 视频…';
     try{
-      for(const t of media){t.video.src=t.source;t.video.load();}
-      await Promise.all(media.map(t=>waitFrame(t.video)));
-      seek(active.video,config.neutralFrame/config.fps);await waitFrame(active.video,config.neutralFrame/config.fps);
+      // Keep an in-flight download: restarting both clips discards slow-network progress.
+      for(const t of media)if(!t.video.getAttribute('src')||t.video.error){t.video.src=t.source;t.video.load();}
+      await Promise.all(media.map(t=>waitFrame(t.video,undefined,120000)));
+      seek(active.video,config.neutralFrame/config.fps);await waitFrame(active.video,config.neutralFrame/config.fps,120000);
       active.video.style.opacity='1';active.visible=true;document.getElementById('portrait').style.visibility='hidden';
-      ready=true;syncPhase();aim=targetPhase=phase;status.textContent='原生视频 · 手动移动鼠标';schedule();
-    }catch(error){document.getElementById('media-error').textContent='视频读取失败，暂时展示正面图';console.warn(error);}
+      ready=true;blocked=false;networkRetries=0;document.getElementById('media-error').textContent='';syncPhase();aim=targetPhase=phase;status.textContent='原生视频 · 手动移动鼠标';schedule();
+    }catch(error){
+      document.getElementById('media-error').textContent='视频仍在加载，稍后将自动启用；也可点击页面重试';console.warn(error);
+    }finally{
+      loading=false;
+      if(!ready&&networkRetries++<3)retryLoad();
+    }
   }
   async function changeDirection(sign){
     if(pending?.sign===sign)return;
@@ -342,7 +353,7 @@
   }
   for(const track of media){
     track.video.addEventListener('waiting',()=>{if(track===active)metrics.waits++;});
-    track.video.addEventListener('seeked',schedule);track.video.addEventListener('canplay',schedule);
+    track.video.addEventListener('seeked',schedule);track.video.addEventListener('canplay',()=>{schedule();if(!ready)retryLoad();});
     if(track.video.requestVideoFrameCallback){
       const frame=(now,meta)=>{if(track===active){metrics.presented++;metrics.frameSamples.push({at:now,time:meta.mediaTime,sign:track.sign});if(metrics.frameSamples.length>600)metrics.frameSamples.shift();}track.video.requestVideoFrameCallback(frame);};track.video.requestVideoFrameCallback(frame);
     }
@@ -370,7 +381,8 @@
   window.addEventListener('scroll',()=>{if(resumeMode==='hero'&&scrollY>2){requestEntry();return;}if(resumeMode==='resume'&&scrollY<resumeSection.offsetTop-2){requestLeave();return;}if(scrollY>2){pointer=null;mode='manual';lastPointerAt=-Infinity;}schedule();},{passive:true});
   hero.addEventListener('pointerleave',()=>{if(mode==='manual'){pointer=null;schedule();}});
   window.addEventListener('blur',()=>{if(mode==='manual'){pointer=null;schedule();}});
-  window.addEventListener('pointerdown',()=>{blocked=false;document.getElementById('media-error').textContent='';schedule();});
+  window.addEventListener('pointerdown',()=>{blocked=false;if(!ready)load();else document.getElementById('media-error').textContent='';schedule();});
+  window.addEventListener('online',()=>{if(!ready){networkRetries=0;load();}});
   window.addEventListener('resize',schedule);
   document.addEventListener('visibilitychange',()=>{if(document.hidden){for(const t of media)t.video.pause();resumeVideo.pause();reverseVideo.pause();if(raf){cancelAnimationFrame(raf);raf=0;}}else{last=0;if(resumeMode==='entering')resumeVideo.play().catch(()=>{resumeVideoFailed=true;finishEntry();});if(resumeMode==='leaving')reverseVideo.play().catch(finishLeave);schedule();}});
   reduced.addEventListener('change',()=>{if(reduced.matches){for(const t of media)t.video.pause();resumeVideo.pause();reverseVideo.pause();mode='manual';pointer=null;if(resumeMode==='preparing'||resumeMode==='entering')finishEntry();else if(resumeMode==='leaving'||resumeMode==='prepare-leave')finishLeave();}else load();schedule();});fine.addEventListener('change',load);
