@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <script>
+    // A restored scroll position would trigger the biography transition on load.
+    history.scrollRestoration = 'manual';
+    if (performance.getEntriesByType('navigation')[0]?.type === 'reload') {
+      window.scrollTo(0, 0);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090d15">
+  <meta name="description" content="探索视觉表达与产品体验的更多可能。">
+  <link rel="icon" href="data:,">
+  <title>个人作品集</title>
+  <link rel="stylesheet" href="assets/about/about.css">
+  <link rel="stylesheet" href="assets/about/directory.css?v=7">
+  <script defer src="assets/about/directory.js?v=5"></script>
+  <link rel="stylesheet" href="assets/folder-video/folder.css?v=43">
+  <script defer src="assets/folder-video/folder.js?v=3"></script>
+  <link rel="stylesheet" href="assets/title/stroke-title.css">
+  <script defer src="assets/title/stroke-title.js"></script>
+  <style>
+    :root{color-scheme:dark;--bg:#090d15;--text:#f0f3fa;--muted:#a0a9ba;--accent:#3985ff;--fade:500ms;--gaze-fade:180ms;--gutter:clamp(28px,6.25vw,120px);font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif}
+    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text)}body{min-width:280px;overscroll-behavior-y:none}body:not(.has-main){height:100svh}::selection{background:#2455a0;color:white}
+    .stage{position:fixed;inset:0;height:100vh;height:100svh;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 48% 51%,#121e32 0%,var(--bg) 67%)}
+    .portrait{position:absolute;inset:0 0 0 40%;overflow:hidden;pointer-events:none;mask-image:linear-gradient(to right,transparent,black 22%);-webkit-mask-image:linear-gradient(to right,transparent,black 22%)}
+    .portrait img{position:absolute;width:100%;height:100%;object-fit:cover;object-position:50% 50%;opacity:0;transition:opacity var(--gaze-fade) ease;user-select:none;-webkit-user-drag:none}
+    .portrait img[data-direction="front"],.portrait img.is-active{opacity:1}.portrait img[data-direction="front"]{z-index:0}.portrait img:not([data-direction="front"]){z-index:1}
+    .video-layer{position:fixed;inset:0;width:100%;height:100vh;height:100svh;object-fit:cover;object-position:center;opacity:0;transition:opacity var(--fade) ease;pointer-events:none;background:transparent}.video-layer.is-visible{opacity:1}#intro-loop{z-index:2}#main{z-index:3}#outro-loop{z-index:4}
+    .stage::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:linear-gradient(0deg,rgba(9,13,21,.82),transparent 13%),linear-gradient(90deg,rgba(9,13,21,.42),transparent 58%)}
+    .masthead,.footnote{position:fixed;left:var(--gutter);right:var(--gutter);z-index:10;display:flex;justify-content:space-between;gap:24px;align-items:center;pointer-events:none}.masthead{top:max(34px,env(safe-area-inset-top));font-size:13px;letter-spacing:.14em}.identity{display:flex;align-items:center;gap:12px;font-weight:600}.identity::before{content:"";width:7px;height:7px;background:var(--accent);border-radius:50%}.masthead .discipline{font-size:11px;letter-spacing:.18em;color:var(--muted)}
+    .copy{position:fixed;z-index:8;left:var(--gutter);top:50%;translate:0 -44%;width:38%;max-width:740px;transition:opacity var(--fade) ease;pointer-events:none}.copy.is-hidden{opacity:0;visibility:hidden;transition:opacity var(--fade) ease,visibility 0s var(--fade)}
+    .eyebrow{margin:0 0 30px;color:var(--accent);font-size:13px;letter-spacing:.24em;font-weight:500}.eyebrow::before{content:"";display:inline-block;width:26px;height:1px;margin-right:13px;background:currentColor;vertical-align:middle}
+    h1{font-size:clamp(46px,4.6vw,92px);line-height:1.22;letter-spacing:-.05em;font-weight:650;margin:0 0 32px}h1 span{display:block}h1 span:last-child{color:var(--accent)}
+    .subtitle{margin:0 0 20px;font-size:clamp(18px,1.5vw,28px);line-height:1.6;font-weight:400;letter-spacing:.035em}.description{font-size:clamp(13px,.93vw,17px);line-height:2.05;color:var(--muted);margin:0;max-width:30em;letter-spacing:.045em;text-wrap:pretty}
+    .footnote{bottom:max(32px,env(safe-area-inset-bottom));font-size:11px;letter-spacing:.16em;color:var(--muted)}.specialties{display:flex;gap:22px}.specialties span+span::before{content:"/";color:#41516a;margin-right:22px}.edition{font-variant-numeric:tabular-nums;color:#707c91}
+    .narrative{opacity:0}.narrative.is-visible{opacity:1}.narrative h2{font-size:clamp(28px,3.3vw,64px);line-height:1.5;font-weight:600;letter-spacing:.025em;margin:0;text-wrap:balance}.narrative .eyebrow{margin-bottom:22px}.media-error{position:fixed;z-index:12;bottom:80px;left:var(--gutter);max-width:30em;color:var(--muted);font-size:13px;line-height:1.8}.media-error:empty{display:none}
+    .scroll-cue{display:none}.has-main .scroll-cue{display:inline}.has-main .edition{display:none}
+    @media(min-width:1800px){.copy{width:39%}}
+    @media(max-width:760px){:root{--gutter:26px}.masthead{top:max(26px,env(safe-area-inset-top))}.masthead .discipline{font-size:9px;letter-spacing:.09em}.copy{top:106px;translate:none;width:calc(100% - 52px);max-width:560px}.eyebrow{font-size:11px;margin-bottom:20px}h1{font-size:clamp(39px,8.7vw,64px);line-height:1.17;margin-bottom:18px}h1 span{display:inline}h1 span:last-child{display:block}.subtitle{font-size:17px;margin-bottom:10px}.description{font-size:12px;line-height:1.85;max-width:28em}.portrait{inset:38% 0 0;mask-image:linear-gradient(to bottom,transparent,black 18%);-webkit-mask-image:linear-gradient(to bottom,transparent,black 18%)}.stage::after{background:linear-gradient(0deg,rgba(9,13,21,.92),transparent 16%),linear-gradient(to bottom,rgba(9,13,21,.2),transparent 55%)}.footnote{bottom:max(22px,env(safe-area-inset-bottom));font-size:9px}.specialties{gap:10px}.specialties span+span::before{margin-right:10px}.narrative{top:18%;width:calc(100% - 52px)}.narrative h2{font-size:30px}.media-error{bottom:58px;font-size:11px}}
+    @media(max-height:680px) and (min-width:761px){.masthead{top:24px}.footnote{bottom:22px}.eyebrow{margin-bottom:18px}h1{font-size:clamp(40px,4.3vw,65px);margin-bottom:20px}.subtitle{font-size:18px;margin-bottom:12px}.description{font-size:13px}}
+    @media(max-height:700px) and (max-width:760px){.copy{top:82px}.eyebrow{margin-bottom:14px}h1{font-size:38px;margin-bottom:12px}.subtitle{font-size:15px}.description{font-size:11px}.portrait{inset:44% 0 0}}
+    @media(prefers-reduced-motion:reduce){.portrait img,.copy,.video-layer{transition:none!important}}
+
+    .description{white-space:pre-line}
+    /* 本次参考：轻字重大字、左右错位、极小正文、中央主体；不使用参考角色或背景。 */
+    .portrait{inset:0;mask-image:none;-webkit-mask-image:none}
+    .portrait img{opacity:1;object-position:center;transition:none}
+    .video-layer{width:100%;height:100%;object-fit:cover;object-position:50% 50%;transform:none}
+    #intro-loop{z-index:2}#intro-gaze{z-index:3}#main{z-index:4}#outro-loop{z-index:5}
+    .stage::after{z-index:7;background:linear-gradient(0deg,rgba(9,13,21,.87),transparent 22%),linear-gradient(90deg,rgba(9,13,21,.55),transparent 36%,transparent 65%,rgba(9,13,21,.35))}
+    .type-landscape{position:absolute;z-index:6;left:-.025em;right:-.025em;top:25%;color:#a7b2ce;opacity:.045;font-size:23vw;font-weight:900;letter-spacing:-.06em;white-space:nowrap;line-height:1.1;pointer-events:none;mask-image:radial-gradient(ellipse 28% 75% at 50% 45%,transparent 65%,black 100%)}
+    .copy{inset:0;width:100%;max-width:none;translate:none;pointer-events:none}
+    .eyebrow{position:absolute;top:18%;left:var(--gutter);font-size:10px;letter-spacing:.23em;color:#a0a9ba;font-weight:400}.eyebrow::before{display:none}
+    h1{position:absolute;left:var(--gutter);bottom:25%;margin:0;font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",sans-serif;font-size:clamp(38px,4.2vw,82px);font-weight:900;line-height:1.2;letter-spacing:-.045em}
+    h1 span:last-child{color:var(--text)}
+    .description{position:absolute;left:var(--gutter);bottom:12%;width:24%;max-width:26em;font-family:"Courier New","Microsoft YaHei",monospace;font-size:clamp(11px,.78vw,14px);line-height:1.9;letter-spacing:.025em;color:#929db1}
+    .subtitle{position:absolute;right:var(--gutter);bottom:13%;width:28%;text-align:right;margin:0;font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-size:clamp(24px,2.5vw,49px);font-weight:400;line-height:1.42;letter-spacing:-.025em}.subtitle span{display:block}
+    .masthead{top:max(28px,env(safe-area-inset-top))}.masthead .discipline{font-size:10px}.identity{font-size:12px;letter-spacing:.07em}
+    .footnote{font-size:10px;bottom:max(26px,env(safe-area-inset-bottom))}.edition{font-size:9px}
+    .narrative{inset:auto auto 16% var(--gutter);width:30%;max-width:640px;top:auto}.narrative .eyebrow{position:static;margin-bottom:18px}.narrative h2{font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-weight:400;font-size:clamp(30px,3.5vw,66px)}
+    .is-narrative .type-landscape{opacity:0}.type-landscape{transition:opacity var(--fade)}
+    @media(max-width:760px){
+      :root{--gutter:24px}.masthead{top:max(24px,env(safe-area-inset-top))}.masthead .discipline{font-size:8px}
+      .portrait{inset:0;mask-image:none;-webkit-mask-image:none}.type-landscape{top:31%;font-size:28vw;opacity:.04}
+      .copy{inset:0;width:100%;max-width:none}.eyebrow{top:13%;left:var(--gutter);font-size:9px;margin:0}
+      h1{left:var(--gutter);bottom:auto;top:18%;font-size:clamp(29px,7.3vw,50px);line-height:1.2;margin:0}
+      .subtitle{bottom:15%;right:var(--gutter);width:64%;font-size:clamp(23px,6.3vw,38px);line-height:1.35}
+      .description{bottom:7%;width:75%;font-size:10px;line-height:1.7;max-width:32em}
+      .stage::after{background:linear-gradient(0deg,rgba(9,13,21,.98),rgba(9,13,21,.55) 20%,transparent 46%,transparent 68%,rgba(9,13,21,.55)),linear-gradient(90deg,rgba(9,13,21,.2),transparent 55%)}
+      .footnote{bottom:max(17px,env(safe-area-inset-bottom));font-size:8px}.edition{display:none}.specialties{gap:10px}.specialties span+span::before{margin-right:10px}
+      .narrative{inset:auto 24px 17%;width:auto;max-width:540px}.narrative h2{font-size:30px}.narrative .eyebrow{position:static}
+    }
+    @media(max-height:600px) and (min-width:761px){h1{font-size:38px;bottom:30%}.description{bottom:13%;font-size:10px}.subtitle{font-size:25px;bottom:17%}.eyebrow{top:18%}}
+    @media(max-height:700px) and (max-width:760px){h1{font-size:29px;top:17%}.subtitle{font-size:23px;bottom:18%}.description{font-size:9px;bottom:8%;width:78%}.eyebrow{top:12%}.footnote{font-size:7px}}
+
+  </style>
+</head>
+<body>
+  <main id="hero" class="stage" aria-label="个人作品集首页">
+    <div class="portrait" id="portrait"><img id="fallback-image" src="assets/hero/hero-video-poster.jpg" alt="佩戴眼镜和耳机的设计师 IP 人物" width="1920" height="1080" fetchpriority="high"></div>
+    <video id="intro-loop" class="video-layer" loop muted playsinline preload="auto" poster="assets/hero/hero-video-poster.jpg" aria-hidden="true"></video>
+    <video id="intro-gaze" class="video-layer" muted playsinline preload="auto" aria-hidden="true"></video>
+    <video id="main" class="video-layer" muted playsinline preload="auto" aria-hidden="true"></video>
+    <video id="outro-loop" class="video-layer" autoplay loop muted playsinline preload="auto" aria-hidden="true"></video>
+    <div class="type-landscape" aria-hidden="true">视觉设计</div>
+  </main>
+  <header class="masthead"><div class="identity">个人 · 作品集</div><span class="discipline">UI / BRAND / IP</span></header>
+  <section class="copy" id="intro-copy" aria-labelledby="hero-title">
+    <p class="eyebrow" id="eyebrow">想象有形，体验有感</p>
+    <h1 id="hero-title"><span>个人</span><span>作品集</span></h1>
+    <p class="subtitle" id="subtitle">让想法，成为看得见的体验</p>
+    <p class="description" id="description">探索视觉表达与
+产品体验的更多可能。</p>
+  </section>
+  <section class="copy narrative" id="narrative-copy" aria-hidden="true"><p class="eyebrow" id="beat-index"></p><h2 id="beat-text"></h2></section>
+  <p class="media-error" id="media-error" role="status"></p>
+  <footer class="footnote"><div class="specialties"><span>UI 设计</span><span>品牌视觉</span><span>IP 设计</span></div><span class="edition">设计，从好奇开始</span><span class="scroll-cue">滚动，探索视觉叙事 ↓</span></footer>
+  <noscript><p class="media-error">启用 JavaScript 后可体验人物追视；当前展示视频正面帧。</p></noscript>
+  <p id="proof-status" hidden aria-hidden="true"></p>
+  <div class="hero-scroll-space" aria-hidden="true"></div>
+  <section id="about" class="about-story" aria-labelledby="about-heading" aria-hidden="true" inert>
+   <div class="about-screen">
+    <div class="about-portrait"><img src="assets/about/portrait-introduction.png" alt="李瑞的设计师 IP 人物摊手介绍" width="1672" height="941" loading="eager" decoding="async"><video id="resume-transition" muted playsinline preload="auto" aria-hidden="true" src="assets/video/resume-transition-seek.mp4"></video><video id="resume-transition-reverse" muted playsinline preload="auto" aria-hidden="true" src="assets/video/resume-transition-reverse.mp4"></video></div>
+    <p class="about-kicker"><b>02</b><span>BIOGRAPHY / 个人履历</span></p>
+    <p class="about-art" aria-hidden="true">天才艺术家</p>
+    <div class="about-copy">
+      <h2 id="about-heading" class="about-heading"><span>DESIGN.</span><span>EXPLORE.</span><span>CREATE.</span></h2>
+      <p class="about-name"><span>你好，我是</span>李瑞。</p>
+      <p class="about-note">在 UI、品牌视觉与 IP 设计之间探索，<br>把好奇变成尝试，把想法做成作品。</p>
+      <div class="about-disciplines"><span>UI 设计</span><span>品牌视觉</span><span>IP 设计</span></div>
+    </div>
+    <div class="about-chapters">
+      <article class="about-beat" data-resume-beat="0">
+        <p class="about-education-label">01 / 个人介绍</p>
+        <p class="about-intro-title">想法不止于<br>想象。</p>
+        <p class="about-note">我是李瑞，一名即将走出校园的设计探索者。<br>把好奇变成尝试，把想法做成作品。</p>
+      </article>
+      <article class="about-beat" data-resume-beat="1" aria-hidden="true" inert>
+        <p class="about-year">2027</p>
+        <p class="about-education-label">02 / 教育经历</p>
+        <div class="about-school"><p class="school">山东理工大学</p><p class="major">数字媒体技术<br>2027 届应届毕业生</p></div>
+      </article>
+      <article class="about-beat" data-resume-beat="2" aria-hidden="true" inert>
+        <p class="about-education-label">03 / 设计探索</p>
+        <div class="about-directions"><p>UI 设计</p><p>品牌视觉</p><p>IP 设计</p></div>
+        <p class="about-note">在视觉表达与产品体验之间，<br>持续探索，动手实践。</p>
+      </article>
+    </div>
+    <div class="about-bottom"><span id="resume-step">01 / 03</span><span>向下滚动，继续认识我</span><span class="resume-track" aria-hidden="true"><i></i></span></div>
+   </div>
+  </section>
+<script>
+  'use strict';
+  const hero=document.getElementById('hero'),status=document.getElementById('proof-status');
+  const fine=matchMedia('(hover: hover) and (pointer: fine)'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  const config={fps:24,frames:139,quad:[{start:0,count:45},{start:45,count:24},{start:69,count:22},{start:91,count:48}],neutralFrame:111,tauMs:70,maxRate:2.25,minRate:.60,settleRate:.85,gain:5.5,rateTauMs:100,rateIntervalMs:80,rateEpsilon:.055,cycleSeconds:5};
+  const TAU=Math.PI*2,clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),wrap=v=>(v%TAU+TAU)%TAU,delta=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
+  const media=[1,-1].map(sign=>{
+    const v=document.createElement('video');v.id=sign===1?'orbit-forward':'orbit-reverse';v.muted=true;v.defaultMuted=true;v.playsInline=true;v.preload='auto';v.loop=true;
+    v.setAttribute('muted','');v.setAttribute('playsinline','');
+    Object.assign(v.style,{position:'fixed',inset:'0',width:'100%',height:'100%',objectFit:'cover',objectPosition:'50% 50%',opacity:'0',transition:'none',pointerEvents:'none',zIndex:'3'});hero.append(v);
+    return{sign,video:v,visible:false,rate:1,appliedRate:1,rateAt:0,source:'assets/video/orbit-smooth-'+(sign===1?'forward':'reverse')+'.mp4'};
+  });
+  // 单调三次曲线让角度及其速度在四个标定点处都连续。
+  const knots=[...config.quad.map(q=>q.start),config.frames];
+  const slopes=config.quad.map(q=>(Math.PI/2)/q.count);
+  const tangents=slopes.map((d,i)=>2/(1/d+1/slopes[(i+3)%4]));tangents.push(tangents[0]);
+  function poseCurve(index){
+    index=clamp(index,0,config.frames-1);let i=3;for(let k=0;k<4;k++)if(index<knots[k+1]){i=k;break;}
+    const h=knots[i+1]-knots[i],t=(index-knots[i])/h,t2=t*t,t3=t2*t,y0=i*Math.PI/2,y1=(i+1)*Math.PI/2,m0=tangents[i],m1=tangents[i+1];
+    const angle=(2*t3-3*t2+1)*y0+(t3-2*t2+t)*h*m0+(-2*t3+3*t2)*y1+(t3-t2)*h*m1;
+    const derivative=((6*t2-6*t)*y0+(3*t2-4*t+1)*h*m0+(-6*t2+6*t)*y1+(3*t2-2*t)*h*m1)/h;
+    return{angle,derivative};
+  }
+  function phaseAt(index){return poseCurve(index).angle;}
+  const neutral=phaseAt(config.neutralFrame);
+  let ready=false,loading=false,active=media[0],phase=neutral,targetPhase=neutral,aim=neutral,mode='manual',pointer=null,lastInput=null,demoAngle=0,last=0,raf=0,pending=null,ticket=0,blocked=false,velocity=0,lastPointerAt=-Infinity,settled=true,lastSwitchAt=-Infinity,lastTraceAt=0;
+  const metrics={switches:0,seeks:0,waits:0,presented:0,trace:[],frameSamples:[],overlapSamples:0,rateWrites:0,switchDurations:[]};
+  const playing=new WeakSet();
+  // The real clip performs the entrance; the resume holds its last decoded frame.
+  const resumeConfig={transitionRate:1.9,fadeSeconds:.24,mainVideo:'assets/video/resume-transition-seek.mp4',fps:24,handoffViewports:.2,beats:[{start:0,end:.30},{start:.30,end:.66},{start:.66,end:1.2}],fadeRange:.08,riseDesktop:36,riseMobile:24,exitRise:20};
+  const resumeSection=document.getElementById('about'),resumeBeats=[...document.querySelectorAll('[data-resume-beat]')];
+  const resumeVideo=document.getElementById('resume-transition'),heroSpacer=document.querySelector('.hero-scroll-space');
+  const reverseVideo=document.getElementById('resume-transition-reverse');
+  let resumeProgress=0,resumeVideoReady=false,resumeVideoFailed=false,resumeDuration=0,transitionMix=0,handoffReady=false,resumeMode='hero',reverseReady=false;
+  const smooth=v=>{v=clamp(v,0,1);return v*v*(3-2*v);};
+  resumeVideo.muted=true;resumeVideo.defaultMuted=true;resumeVideo.playbackRate=resumeConfig.transitionRate;
+  resumeVideo.addEventListener('loadedmetadata',()=>{
+    if(Number.isFinite(resumeVideo.duration)&&resumeVideo.duration>0){
+      resumeDuration=resumeVideo.duration;
+      schedule();
+    }
+  });
+  resumeVideo.addEventListener('loadeddata',()=>{resumeVideoReady=true;schedule();});
+  resumeVideo.addEventListener('seeked',schedule);
+  resumeVideo.addEventListener('error',()=>{resumeVideoFailed=true;resumeVideoReady=false;resumeSection.classList.remove('has-resume-video');if(resumeMode==='preparing'||resumeMode==='entering')finishEntry();schedule();});
+  reverseVideo.muted=true;reverseVideo.defaultMuted=true;reverseVideo.playbackRate=resumeConfig.transitionRate;
+  reverseVideo.addEventListener('loadeddata',()=>{reverseReady=true;schedule();});
+  reverseVideo.addEventListener('seeked',schedule);
+  reverseVideo.addEventListener('error',()=>{reverseReady=false;if(resumeMode==='leaving'||resumeMode==='prepare-leave')finishLeave();});
+  function lockTransition(locked){document.documentElement.style.overflow=locked?'hidden':'';document.body.classList.toggle('is-transitioning',locked);}
+  function requestEntry(){
+    if(resumeMode!=='hero')return;
+    pointer=null;mode='manual';lastPointerAt=-Infinity;resumeMode='preparing';lockTransition(true);scrollTo(0,0);
+    if(reduced.matches||resumeVideoFailed){finishEntry();return;}
+    if(resumeVideo.currentTime>.02)resumeVideo.currentTime=0;
+    schedule();
+  }
+  function finishEntry(){
+    resumeVideo.pause();resumeMode='resume';handoffReady=true;lockTransition(false);scrollTo(0,resumeSection.offsetTop);schedule();
+  }
+  function requestLeave(){
+    if(resumeMode!=='resume')return;
+    lockTransition(true);resumeMode='prepare-leave';
+    if(reduced.matches||resumeVideoFailed||reverseVideo.error){finishLeave();return;}
+    reverseVideo.currentTime=0;schedule();
+  }
+  function finishLeave(){
+    reverseVideo.pause();resumeMode='returning';lockTransition(false);scrollTo(0,0);resumeVideo.currentTime=0;schedule();
+  }
+  resumeVideo.addEventListener('ended',finishEntry);
+  reverseVideo.addEventListener('ended',finishLeave);
+  function updateResume(now,dt){
+    const useVideo=resumeVideoReady&&!resumeVideoFailed&&!reduced.matches&&resumeDuration>0;
+    let sceneEntry,copyEntry,needsFrame=false;
+    if(resumeMode==='preparing'&&useVideo&&!resumeVideo.seeking&&(!ready||Math.abs(delta(neutral,phase))<.055)){
+      handoffReady=true;resumeMode='entering';resumeSection.classList.remove('is-reversing');
+      resumeVideo.play().catch(()=>{resumeVideoFailed=true;finishEntry();});
+    }
+    if(resumeMode==='prepare-leave'&&reverseReady&&!reverseVideo.seeking){
+      resumeMode='leaving';resumeSection.classList.add('is-reversing');
+      reverseVideo.play().catch(finishLeave);
+    }
+    const targetMix=['entering','resume','prepare-leave','leaving'].includes(resumeMode)?1:0;
+    transitionMix+=clamp(targetMix-transitionMix,-dt/resumeConfig.fadeSeconds,dt/resumeConfig.fadeSeconds);
+    sceneEntry=smooth(transitionMix);
+    if(resumeMode==='returning'&&transitionMix<.001){resumeMode='hero';handoffReady=false;resumeSection.classList.remove('is-reversing');}
+    let videoProgress=resumeDuration?clamp(resumeVideo.currentTime/resumeDuration,0,1):0;
+    if(['prepare-leave','leaving','returning'].includes(resumeMode))videoProgress=resumeMode==='returning'?0:1-clamp(reverseVideo.currentTime/Math.max(.01,reverseVideo.duration||resumeDuration),0,1);
+    copyEntry=useVideo?smooth((videoProgress-.65)/.30):(resumeMode==='resume'?1:0);
+    resumeSection.style.setProperty('--resume-object-x',(50+22*smooth(videoProgress))+'%');
+    resumeSection.classList.toggle('has-resume-video',useVideo);
+    document.documentElement.style.setProperty('--hero-opacity',String(1-sceneEntry));
+    const heroCopy=resumeMode==='hero'?1:resumeMode==='returning'?1-sceneEntry:0;
+    document.documentElement.style.setProperty('--intro-copy-opacity',String(heroCopy));
+    needsFrame=Math.abs(targetMix-transitionMix)>.001||['preparing','entering','prepare-leave','leaving','returning'].includes(resumeMode);
+    resumeSection.style.setProperty('--resume-scene-opacity',String(sceneEntry));
+    resumeSection.style.setProperty('--resume-copy-opacity',String(copyEntry));
+    resumeSection.style.setProperty('--resume-copy-y',reduced.matches?'0px':((1-copyEntry)*24)+'px');
+    resumeSection.classList.toggle('is-visible',sceneEntry>0);
+    resumeSection.setAttribute('aria-hidden',String(sceneEntry<.5));resumeSection.inert=sceneEntry<.5;
+    resumeProgress=clamp((scrollY-resumeSection.offsetTop)/Math.max(1,resumeSection.offsetHeight-innerHeight),0,1);
+    let current=0,best=-1;
+    resumeBeats.forEach((node,i)=>{
+      const beat=resumeConfig.beats[i],fadeIn=i===0?copyEntry:smooth((resumeProgress-beat.start)/resumeConfig.fadeRange),fadeOut=i===resumeBeats.length-1?1:1-smooth((resumeProgress-(beat.end-resumeConfig.fadeRange))/resumeConfig.fadeRange);
+      const opacity=fadeIn*fadeOut;
+      node.style.opacity=String(opacity);
+      const rise=innerWidth<=760?resumeConfig.riseMobile:resumeConfig.riseDesktop;
+      // Incoming text rises from below; outgoing text keeps moving upward.
+      // Scroll position owns both values, so reversing the scroll retraces the motion.
+      node.style.transform=reduced.matches?'none':'translate3d(0,'+((1-fadeIn)*rise-(1-fadeOut)*resumeConfig.exitRise)+'px,0)';
+      node.setAttribute('aria-hidden',String(opacity<.5));node.inert=opacity<.5;
+      if(opacity>best){best=opacity;current=i;}
+    });
+    resumeSection.style.setProperty('--resume-progress',String(resumeProgress));
+    resumeSection.style.setProperty('--about-art-opacity',String(.12*(1-smooth(resumeProgress/.5))));
+    document.getElementById('resume-step').textContent='0'+(current+1)+' / 03';
+    return needsFrame;
+  }
+  window.resumeStory={getState:()=>({progress:resumeProgress,media:resumeConfig.mainVideo,videoReady:resumeVideoReady,duration:resumeDuration,videoTime:resumeVideo.currentTime,videoPaused:resumeVideo.paused,resumeMode,reverseTime:reverseVideo.currentTime,reversePaused:reverseVideo.paused,seeking:resumeVideo.seeking,transitionMix,handoffReady,sceneOpacity:Number(resumeSection.style.getPropertyValue('--resume-scene-opacity')),opacities:resumeBeats.map(node=>Number(node.style.opacity))})};
+  function schedule(){if(!raf&&!document.hidden)raf=requestAnimationFrame(tick);}
+  function face(){const s=Math.max(innerWidth/1920,innerHeight/1080);return{x:innerWidth/2,y:(innerHeight-1080*s)/2+1080*s*.39};}
+  function sourceIndex(track=active){const i=track.video.currentTime*config.fps;return clamp(track.sign===1?i:config.frames-1-i,0,config.frames-1);}
+  function syncPhase(){phase+=delta(phaseAt(sourceIndex()),phase);}
+  function seek(v,time){if(Math.abs(v.currentTime-time)<.008&&!v.seeking)return;v.currentTime=time;metrics.seeks++;}
+  function waitFrame(v,time){
+    return new Promise((resolve,reject)=>{
+      const cleanup=()=>{clearTimeout(timer);for(const e of ['loadeddata','seeked','canplay'])v.removeEventListener(e,check);v.removeEventListener('error',fail);};
+      const check=()=>{if(v.readyState>=2&&!v.seeking&&(time===undefined||Math.abs(v.currentTime-time)<.021)){cleanup();resolve();}};
+      const fail=()=>{cleanup();reject(Error('video decode unavailable'));};
+      const timer=setTimeout(fail,5000);for(const e of ['loadeddata','seeked','canplay'])v.addEventListener(e,check);v.addEventListener('error',fail);check();
+    });
+  }
+  function play(v){
+    if(blocked||playing.has(v)||!v.paused||document.hidden||reduced.matches)return;
+    playing.add(v);v.play().catch(()=>{blocked=true;document.getElementById('media-error').textContent='视频播放受限，点击页面重试';}).finally(()=>playing.delete(v));
+  }
+  async function load(){
+    if(ready||loading||!fine.matches||reduced.matches)return;
+    loading=true;status.textContent='正在加载 1920×1080 视频…';
+    try{
+      for(const t of media){t.video.src=t.source;t.video.load();}
+      await Promise.all(media.map(t=>waitFrame(t.video)));
+      seek(active.video,config.neutralFrame/config.fps);await waitFrame(active.video,config.neutralFrame/config.fps);
+      active.video.style.opacity='1';active.visible=true;document.getElementById('portrait').style.visibility='hidden';
+      ready=true;syncPhase();aim=targetPhase=phase;status.textContent='原生视频 · 手动移动鼠标';schedule();
+    }catch(error){document.getElementById('media-error').textContent='视频读取失败，暂时展示正面图';console.warn(error);}
+  }
+  async function changeDirection(sign){
+    if(pending?.sign===sign)return;
+    if(sign===active.sign){pending=null;ticket++;return;}
+    const id=++ticket,next=media.find(t=>t.sign===sign),started=performance.now(),previousRate=active.appliedRate;pending=next;active.video.pause();
+    const frame=Math.round(sourceIndex()),time=(sign===1?frame:config.frames-1-frame)/config.fps;
+    try{
+      seek(next.video,time);await waitFrame(next.video,time);
+      if(ticket!==id)return;
+      // 同一原帧的正反接管：原子切换，绝不把两个人脸做透明度混合。
+      for(const t of media){t.visible=t===next;t.video.style.opacity=t.visible?'1':'0';}
+      next.rate=next.appliedRate=previousRate;next.video.playbackRate=previousRate;next.rateAt=performance.now();metrics.rateWrites++;
+      active=next;pending=null;lastSwitchAt=performance.now();metrics.switches++;metrics.switchDurations.push(lastSwitchAt-started);syncPhase();schedule();
+    }catch(error){if(ticket!==id)return;pending=null;blocked=true;document.getElementById('media-error').textContent='视频暂未就绪，点击页面重试';console.warn(error);}
+  }
+  function tick(now){
+    raf=0;const dt=clamp(last?(now-last)/1000:1/60,.001,.05);last=now;
+    const progress=clamp(scrollY/innerHeight,0,1);
+    if(updateResume(now,dt))schedule();
+    document.body.classList.toggle('is-away-from-hero',progress>.65);
+    if(!ready)return;
+    if(transitionMix>.995||((!resumeVideoReady||reduced.matches)&&progress>.7)){for(const t of media)t.video.pause();return;}
+    let input=pointer;
+    if(mode!=='manual'){
+      demoAngle+=(mode==='cw'?1:-1)*TAU/config.cycleSeconds*dt;
+      const f=face(),r=Math.min(innerWidth*.3,innerHeight*.29);input={x:f.x+Math.cos(demoAngle)*r,y:f.y+Math.sin(demoAngle)*r};
+    }
+    lastInput=input;syncPhase();
+    const f=face(),dx=input?input.x-f.x:0,dy=input?input.y-f.y:0,r=Math.hypot(dx,dy);
+    const raw=input&&r>28?Math.atan2(-dy,dx):neutral;
+    const previousAim=aim;targetPhase=aim+delta(raw,aim);aim+=delta(targetPhase,aim)*(1-Math.exp(-dt/(config.tauMs/1000)));
+    const measured=clamp((aim-previousAim)/dt,-12,12);velocity+=(measured-velocity)*(1-Math.exp(-dt/.10));
+    let error=delta(aim,phase);
+    const index=sourceIndex(),radiansPerFrame=poseCurve(index).derivative,tolerance=radiansPerFrame*.72;
+    const moving=mode!=='manual'||now-lastPointerAt<180;
+    const stopTolerance=tolerance*.84,restartTolerance=tolerance*1.45;
+    if(reduced.matches){for(const t of media)t.video.pause();mode='manual';settled=true;}
+    else if(!moving&&Math.abs(error)<(settled?restartTolerance:stopTolerance)){
+      if(!active.video.paused)active.video.pause();settled=true;
+      if(pending){ticket++;pending=null;}
+    }else{
+      settled=false;
+      // 角速度前馈减少追赶式加减速；误差只负责温和修正。
+      const angularCommand=velocity+error*config.gain;
+      const sign=moving&&Math.abs(velocity)>.12?(velocity>0?1:-1):(error>0?1:-1);
+      if(sign!==active.sign||pending){
+        if(now-lastSwitchAt>=85)changeDirection(sign);
+      }else{
+        const angularRateAt1x=config.fps*radiansPerFrame;
+        const requested=clamp(Math.max(0,sign*angularCommand)/angularRateAt1x,moving?config.minRate:config.settleRate,config.maxRate);
+        active.rate+=(requested-active.rate)*(1-Math.exp(-dt/(config.rateTauMs/1000)));
+        if(now-active.rateAt>=config.rateIntervalMs&&Math.abs(active.rate-active.appliedRate)>=config.rateEpsilon){
+          active.video.playbackRate=active.appliedRate=active.rate;active.rateAt=now;metrics.rateWrites++;
+        }
+        play(active.video);
+      }
+    }
+    // 可见层由原子切换维护，无需每个动画帧强制读取 computed style。
+    if(media.filter(t=>t.visible).length>1)metrics.overlapSamples++;
+    if(now-lastTraceAt>=32){metrics.trace.push({at:now,phase,targetPhase:aim,mode,active:active.sign,error});if(metrics.trace.length>1200)metrics.trace.shift();lastTraceAt=now;}
+    if(mode!=='manual'||pending||!active.video.paused||Math.abs(delta(targetPhase,aim))>.0001||(!settled&&Math.abs(error)>stopTolerance))schedule();
+  }
+  for(const track of media){
+    track.video.addEventListener('waiting',()=>{if(track===active)metrics.waits++;});
+    track.video.addEventListener('seeked',schedule);track.video.addEventListener('canplay',schedule);
+    if(track.video.requestVideoFrameCallback){
+      const frame=(now,meta)=>{if(track===active){metrics.presented++;metrics.frameSamples.push({at:now,time:meta.mediaTime,sign:track.sign});if(metrics.frameSamples.length>600)metrics.frameSamples.shift();}track.video.requestVideoFrameCallback(frame);};track.video.requestVideoFrameCallback(frame);
+    }
+  }
+  function choose(next){
+    if(!ready||!fine.matches||reduced.matches)return;mode=next;
+    if(next==='manual'){pointer=null;status.textContent='原生视频 · 手动移动鼠标';}
+    else{const f=face();demoAngle=lastInput?Math.atan2(lastInput.y-f.y,lastInput.x-f.x):0;status.textContent=(next==='cw'?'顺时针':'逆时针')+'验证 · 1920×1080 直接播放';}
+    for(const b of document.querySelectorAll('[data-mode]'))b.setAttribute('aria-pressed',String(b.dataset.mode===mode));schedule();
+  }
+  for(const b of document.querySelectorAll('[data-mode]'))b.addEventListener('click',()=>choose(b.dataset.mode));
+  const transitioning=()=>!['hero','resume'].includes(resumeMode);
+  function navigateGesture(direction,event){
+    if(window.directoryTransition?.navigate(direction,event))return;
+    if(transitioning()){if(event.cancelable)event.preventDefault();return;}
+    if(direction>0&&resumeMode==='hero'){if(event.cancelable)event.preventDefault();requestEntry();}
+    else if(direction<0&&resumeMode==='resume'&&scrollY<=resumeSection.offsetTop+2){if(event.cancelable)event.preventDefault();requestLeave();}
+  }
+  window.addEventListener('wheel',e=>{if(e.ctrlKey||Math.abs(e.deltaY)<=Math.abs(e.deltaX))return;navigateGesture(e.deltaY,e);},{passive:false});
+  let touchY=null;
+  window.addEventListener('touchstart',e=>{touchY=e.touches[0]?.clientY??null;},{passive:true});
+  window.addEventListener('touchmove',e=>{if(touchY!==null&&e.touches[0]){const d=touchY-e.touches[0].clientY;if(Math.abs(d)>12)navigateGesture(d,e);}},{passive:false});
+  window.addEventListener('keydown',e=>{if(e.target.closest?.('button,input,textarea,select,a'))return;if(['ArrowDown','PageDown',' '].includes(e.key))navigateGesture(1,e);else if(['ArrowUp','PageUp','Home'].includes(e.key))navigateGesture(-1,e);});
+  window.addEventListener('pointermove',e=>{if(resumeMode!=='hero'||scrollY>2||transitionMix>.01||e.target.closest?.('#proof-panel'))return;if(e.pointerType==='mouse'&&mode==='manual'&&fine.matches&&!reduced.matches){pointer={x:e.clientX,y:e.clientY};lastPointerAt=performance.now();schedule();}});
+  window.addEventListener('scroll',()=>{if(resumeMode==='hero'&&scrollY>2){requestEntry();return;}if(resumeMode==='resume'&&scrollY<resumeSection.offsetTop-2){requestLeave();return;}if(scrollY>2){pointer=null;mode='manual';lastPointerAt=-Infinity;}schedule();},{passive:true});
+  hero.addEventListener('pointerleave',()=>{if(mode==='manual'){pointer=null;schedule();}});
+  window.addEventListener('blur',()=>{if(mode==='manual'){pointer=null;schedule();}});
+  window.addEventListener('pointerdown',()=>{blocked=false;document.getElementById('media-error').textContent='';schedule();});
+  window.addEventListener('resize',schedule);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){for(const t of media)t.video.pause();resumeVideo.pause();reverseVideo.pause();if(raf){cancelAnimationFrame(raf);raf=0;}}else{last=0;if(resumeMode==='entering')resumeVideo.play().catch(()=>{resumeVideoFailed=true;finishEntry();});if(resumeMode==='leaving')reverseVideo.play().catch(finishLeave);schedule();}});
+  reduced.addEventListener('change',()=>{if(reduced.matches){for(const t of media)t.video.pause();resumeVideo.pause();reverseVideo.pause();mode='manual';pointer=null;if(resumeMode==='preparing'||resumeMode==='entering')finishEntry();else if(resumeMode==='leaving'||resumeMode==='prepare-leave')finishLeave();}else load();schedule();});fine.addEventListener('change',load);
+  window.orbitProof={setMode:choose,face,getState:()=>({ready,mode,phase,targetPhase:aim,pending:Boolean(pending),active:active.sign,sourceIndex:sourceIndex(),input:lastInput,metrics,visible:media.filter(t=>getComputedStyle(t.video).opacity==='1').map(t=>t.sign),videos:media.map(t=>({sign:t.sign,width:t.video.videoWidth,height:t.video.videoHeight,opacity:getComputedStyle(t.video).opacity,transition:getComputedStyle(t.video).transitionDuration,paused:t.video.paused,seeking:t.video.seeking,currentTime:t.video.currentTime}))})};
+  document.getElementById('subtitle').replaceChildren(...['让想法，成为','看得见的体验'].map(text=>{const s=document.createElement('span');s.textContent=text;return s;}));
+  if(!fine.matches)status.textContent='触屏保持正面；请在桌面验证鼠标交互';load();schedule();
+
+</script>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <filter id="folder-edge-smoothing" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation=".65" result="softEdge"/>
+    <feComponentTransfer in="softEdge" result="edgeMask">
+      <feFuncA type="linear" slope="1.6" intercept="-.6"/>
+    </feComponentTransfer>
+    <feComposite in="SourceGraphic" in2="edgeMask" operator="in"/>
+  </filter>
+</svg>
+<link rel="stylesheet" href="assets/works/flex-carousel.css"><script defer src="assets/works/flex-carousel.js?v=8"></script><link rel="stylesheet" href="assets/works/bobo-card.css?v=7"><script defer src="assets/works/bobo-card.js?v=11"></script><link rel="stylesheet" href="assets/works/bobo-detail.css?v=8"><link rel="stylesheet" href="assets/works/graphic-home.css?v=12"><script defer src="assets/works/graphic-home.js?v=14"></script><script defer src="assets/works/gallery.js?v=65"></script><script defer src="assets/works/star-border.js?v=2"></script>
+<script defer src="assets/glow-cursor.js?v=2"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cursor = window.createGlowCursor?.();
+    if (!cursor) return;
+
+    const desktop = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+    const cover = document.querySelector('.folder-cover-button');
+    const gallery = document.querySelector('.works-dialog');
+    const outerScenes = document.querySelectorAll('.about-story, .directory-scene, .portfolio-ending');
+    const lifecycle = new AbortController();
+    const { signal } = lifecycle;
+    let suspended = false;
+
+    function sync() {
+      const insideFolder = window.portfolioFolder?.isExpanded() || gallery?.open;
+      cursor.setEnabled(desktop.matches && !document.hidden && !suspended && !insideFolder);
+    }
+
+    const observer = new MutationObserver(records => {
+      if (records.some(record => record.attributeName === 'aria-hidden' &&
+        record.oldValue !== record.target.getAttribute('aria-hidden'))) cursor.clear();
+      sync();
+    });
+    if (cover) observer.observe(cover, { attributeFilter: ['aria-expanded'] });
+    if (gallery) observer.observe(gallery, { attributeFilter: ['open'] });
+    for (const scene of outerScenes) observer.observe(scene, { attributeFilter: ['aria-hidden'], attributeOldValue: true });
+
+    desktop.addEventListener('change', sync, { signal });
+    document.addEventListener('visibilitychange', sync, { signal });
+    window.addEventListener('pageshow', () => { suspended = false; sync(); }, { signal });
+    window.addEventListener('pagehide', event => {
+      suspended = true;
+      sync();
+      if (!event.persisted) {
+        observer.disconnect();
+        lifecycle.abort();
+        cursor.destroy();
+      }
+    }, { signal });
+    sync();
+  }, { once: true });
+</script>
+</body></html>

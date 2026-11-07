@@ -1,0 +1,60 @@
+.works-graphic-home {
+  width: min(96%, 1160px);
+  flex-shrink: 0;
+}
+
+.works-graphic-stage {
+  height: clamp(265px, 63svh, 685px);
+  /* Keep the outgoing card from expanding the dialog's scroll area. */
+  overflow: clip;
+  overflow-clip-margin: 12px;
+}
+
+.works-dialog .works-graphic-cover {
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: var(--swap-ink);
+  text-align: left;
+  touch-action: pan-y;
+}
+
+.works-graphic-cover .card-swap-head {
+  padding-inline: 12px;
+}
+
+.works-graphic-cover .card-swap-title {
+  font-size: 16px;
+}
+
+.works-graphic-cover .card-swap-media img {
+  object-fit: contain;
+}
+
+.works-graphic-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.works-dialog .works-graphic-actions button {
+  min-height: 44px;
+  padding-inline: 24px;
+  border-color: #8eb5ff;
+  background: #263b60;
+  color: #fff;
+}
+
+.works-graphic-cover:focus-visible {
+  outline: 3px solid #a8c5ff;
+  outline-offset: -4px;
+}
+
+@media (max-width: 760px) {
+  .works-graphic-stage {
+    height: clamp(222px, 69vw, 470px);
+  }
+}

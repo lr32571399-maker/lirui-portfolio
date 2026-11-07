@@ -1,0 +1,29 @@
+.works-commercial-gallery {
+  height: clamp(380px, 72svh, 700px);
+  margin-block: 12px 32px;
+}
+
+.works-commercial-fallback {
+  display: flex;
+  gap: 14px;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.works-commercial-fallback a {
+  flex: 0 0 min(72%, 380px);
+  scroll-snap-align: center;
+}
+
+.works-detail .works-commercial-fallback img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .works-commercial-gallery { height: clamp(350px, 56svh, 510px); }
+}

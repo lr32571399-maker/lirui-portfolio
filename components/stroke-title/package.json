@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-stroke-title",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild mount.jsx --bundle --format=iife --jsx=automatic --minify --define:process.env.NODE_ENV=\"\\\"production\\\"\" --outfile=../../assets/title/stroke-title.js --legal-comments=eof"
+  },
+  "dependencies": {
+    "gsap": "^3.13.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

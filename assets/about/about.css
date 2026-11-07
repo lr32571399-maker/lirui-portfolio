@@ -1,0 +1,118 @@
+/* Scroll-driven resume; the supplied portrait stays fixed within the sticky scene. */
+body:not(.has-main) { height: auto; }
+.stage {
+  opacity: var(--hero-opacity, 1);
+}
+.masthead, #intro-copy, .footnote { opacity: var(--intro-copy-opacity, 1); }
+body.is-away-from-hero #intro-copy { pointer-events: none; visibility: hidden; }
+.hero-scroll-space { height: 100svh; pointer-events: none; }
+.about-story { position: relative; z-index: 15; height: 280svh; }
+.about-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  z-index: 15;
+  height: 100svh;
+  opacity: var(--resume-scene-opacity, 0);
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+  background: #090d15;
+  color: #f0f3fa;
+  isolation: isolate;
+  --about-gutter: clamp(28px, 6.25vw, 120px);
+}
+.about-story.is-visible .about-screen { visibility: visible; }
+.about-copy { opacity: var(--resume-copy-opacity, 0); transform: translateY(var(--resume-copy-y, 40px)); }
+.about-portrait { position: absolute; inset: 0; z-index: -3; }
+.about-portrait img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
+.about-screen { --portrait-grade: saturate(.94) contrast(1.025) brightness(.99); }
+.about-portrait img, #resume-transition { filter: var(--portrait-grade); }
+#resume-transition { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0; }
+.has-resume-video #resume-transition { opacity: 1; }
+.has-resume-video .about-portrait img { visibility: hidden; }
+.about-portrait::after { content: ''; position: absolute; inset: 0; pointer-events:none; background: linear-gradient(90deg,rgba(3,17,35,.12),transparent 70%); }
+.about-screen::before {
+  content: ''; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  background: linear-gradient(90deg, rgba(9,13,21,.28), transparent 59%), linear-gradient(0deg, rgba(9,13,21,.75), transparent 18%);
+}
+.about-art {
+  position: absolute; left: -.025em; top: 57%; z-index: -1;
+  margin: 0; font-size: clamp(120px, 19vw, 370px); font-weight: 900;
+  line-height: 1.1; letter-spacing: -.065em; white-space: nowrap;
+  color: transparent; background: linear-gradient(90deg, #7186ab 6%, #4a6389 48%, transparent 90%);
+  background-clip: text; -webkit-background-clip: text;
+  opacity: var(--about-art-opacity, .09); pointer-events: none; user-select: none;
+  mask-image: linear-gradient(180deg, #000 25%, transparent 100%);
+}
+.about-kicker { position: absolute; left: var(--about-gutter); top: 6%; display: flex; align-items: baseline; gap: 12px; font-size: 10px; letter-spacing: .14em; color: #a0a9ba; }
+.about-kicker b { color: #f0f3fa; font-size: 19px; letter-spacing: -.04em; }
+.about-copy { position: relative; margin-left: var(--about-gutter); padding-top: 16svh; padding-bottom: 7svh; width: 28%; }
+.about-heading { margin: 0; font-family: 'Impact','Arial Narrow','Noto Sans SC',sans-serif; font-size: clamp(55px, 6.4vw, 122px); font-weight: 900; line-height: .99; letter-spacing: -.025em; }
+.about-heading span { display: block; }
+.about-name { margin: 36px 0 15px; font-size: clamp(21px, 1.7vw, 32px); letter-spacing: -.035em; font-weight: 700; }
+.about-name span { color: #8c97aa; font-weight: 400; }
+.about-note { max-width: 25em; margin: 0; color: #a0a9ba; font-size: clamp(12px, .85vw, 16px); line-height: 1.9; letter-spacing: .02em; }
+.about-disciplines { margin: 28px 0 0; padding-top: 17px; max-width: 290px; border-top: 1px solid #8296b12b; color: #afb9ca; display: flex; gap: 18px; font-size: 10px; letter-spacing: .06em; }
+.about-chapters { position: absolute; top: 12.5%; left: 38%; width: 25%; height: 34%; }
+.about-beat { position: absolute; inset: 0; opacity: 0; will-change: opacity, transform; }
+.about-beat:first-child { opacity: 1; }
+.about-intro-title { margin: 0 0 24px; font-size: clamp(28px, 3.2vw, 60px); font-weight: 700; line-height: 1.25; letter-spacing: -.045em; }
+.about-directions { margin-bottom: 23px; }
+.about-directions p { margin: 0; font-size: clamp(26px, 2.6vw, 48px); font-weight: 700; line-height: 1.45; letter-spacing: -.03em; }
+.about-year { margin: 0; color: #8195b7; opacity: .24; font-family: 'Noto Sans SC','Microsoft YaHei',sans-serif; font-size: clamp(88px, 9.5vw, 182px); font-weight: 900; letter-spacing: -.075em; line-height: 1; }
+.about-education-label { margin: 14px 0 24px; color: #8794a9; font-size: 9px; letter-spacing: .18em; }
+.about-school { border-top: 1px solid #8296b12b; padding-top: 16px; }
+.about-school p { margin: 0; }
+.about-school .school { font-size: clamp(15px, 1.25vw, 24px); font-weight: 600; letter-spacing: -.025em; }
+.about-school .major { margin-top: 8px; font-size: clamp(11px, .85vw, 16px); color: #a0a9ba; line-height: 1.7; }
+.about-bottom { position: absolute; bottom: 3.5%; left: var(--about-gutter); display:flex; align-items:center; gap:20px; font-size: 9px; color: #8794a9; letter-spacing: .1em; }
+.resume-track { width: 80px; height: 1px; background: #344057; }
+.resume-track i { display: block; width: 100%; height: 100%; background: #3985ff; transform-origin: left; transform: scaleX(var(--resume-progress, 0)); }
+@media(max-width: 760px) {
+  .about-story { height: 260svh; }
+  .about-screen { --about-gutter: 24px; height: 100svh; min-height: 0; }
+  .about-kicker { top: 35px; }
+  .about-copy { padding-top: 88px; padding-bottom: 0; width: calc(100% - 48px); }
+  .about-heading { font-size: clamp(42px, 11.4vw, 62px); line-height: .99; }
+  .about-name { margin: 18px 0 10px; font-size: 21px; }
+  .about-copy > .about-note, .about-copy > .about-disciplines { display:none; }
+  .about-note { font-size: 11px; max-width: 25em; }
+  .about-chapters { top: 39%; left:24px; width: calc(100% - 48px); height: 26%; }
+  .about-intro-title { font-size: 28px; margin-bottom: 12px; }
+  .about-directions { margin-bottom: 10px; }
+  .about-directions p { display: inline; font-size: 19px; margin-right: 12px; }
+  .about-year { font-size: 62px; }
+  .about-education-label { margin: 8px 0 14px; font-size: 8px; }
+  .about-school { padding-top: 12px; max-width: 235px; }
+  .about-school .school { font-size: 17px; }
+  .about-school .major { font-size: 12px; }
+  .about-portrait { inset: auto 0 0; height: 45%; }
+  .has-resume-video .about-portrait { inset: 0; height: 100%; }
+  .has-resume-video #resume-transition { object-position: var(--resume-object-x, 50%) center; }
+  .has-resume-video .about-screen::before { background: none; }
+  .about-story.has-resume-video .about-screen::before { background: linear-gradient(90deg,rgba(9,13,21,.9),rgba(9,13,21,.3) 48%,transparent 86%),linear-gradient(0deg,#090d15,transparent 20%); }
+  .about-portrait img { object-position: 76% center; }
+  .about-screen::before { background: linear-gradient(180deg, #090d15 0%, #090d15 56%, transparent 79%, #090d15 100%); }
+  .about-art { font-size: 27vw; top: auto; bottom: 22%; }
+  .about-bottom { bottom: 24px; font-size: 8px; }
+}
+@media(max-height:700px) and (max-width:760px) {
+  .about-kicker { top: 22px; }
+  .about-copy { padding-top: 68px; }
+  .about-heading { font-size: 35px; }
+  .about-name { font-size: 18px; margin-top: 14px; }
+  .about-chapters { top: 40%; }
+  .about-intro-title { font-size: 25px; }
+  .about-education-label { margin-top: 0; }
+}
+@media(prefers-reduced-motion: reduce) {
+  .about-art { opacity: .04; }
+}
+
+/* Approved quick transition: reverse playback and transition interaction lock. */
+body.is-transitioning #intro-copy { pointer-events: none; visibility: hidden; }
+#resume-transition-reverse { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:0; filter:var(--portrait-grade); }
+.has-resume-video.is-reversing #resume-transition { opacity:0; }
+.has-resume-video.is-reversing #resume-transition-reverse { opacity:1; }
+@media(max-width:760px){.has-resume-video #resume-transition-reverse {object-position:var(--resume-object-x,50%) center;}}

@@ -1,0 +1,43 @@
+.directory-scene{position:fixed;inset:0;z-index:30;height:100svh;overflow:hidden;background:#090d15;color:#f0f3fa;opacity:0;visibility:hidden;transition:opacity .24s ease,visibility 0s .24s;isolation:isolate}
+.directory-scene.is-visible{opacity:1;visibility:visible;transition:opacity .24s ease}
+.directory-scene video,.directory-scene>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.94) contrast(1.025) brightness(.99)}
+.directory-scene video{opacity:0}.directory-scene video.is-active{opacity:1}
+.directory-scene:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(3,17,35,.12),transparent 70%)}
+.directory-copy{position:absolute;z-index:1;left:clamp(28px,6.25vw,120px);top:16%;width:32%;opacity:0;transform:translateY(20px);transition:opacity .45s ease,transform .45s ease}
+.directory-scene.has-copy .directory-copy{opacity:1;transform:none}
+.directory-label{font-size:10px;letter-spacing:.14em;color:#a0a9ba;margin:0 0 30px}.directory-label b{font-size:19px;margin-right:12px;color:#f0f3fa}
+.directory-copy h2{font-family:Impact,'Arial Narrow',sans-serif;font-size:clamp(54px,6.4vw,122px);line-height:.99;letter-spacing:-.025em;margin:0 0 24px}
+.directory-copy h2 span{display:block}.directory-copy p:last-child{font-size:clamp(14px,1.2vw,22px);color:#a0a9ba;line-height:1.8}
+@media(min-width:761px){.directory-copy{top:10%;width:30%}.directory-label{margin-bottom:20px}.directory-copy h2{font-size:clamp(44px,4.6vw,88px);margin-bottom:18px}.directory-copy p:last-child{font-size:clamp(13px,1vw,18px)}}
+.directory-back,.directory-retry{position:absolute;z-index:2;background:#090d1580;color:#f0f3fa;border:1px solid #8296b150;border-radius:24px;padding:10px 18px;font:inherit;font-size:12px;cursor:pointer}
+.directory-back{right:6.25%;top:6%}.directory-back:hover,.directory-retry:hover{border-color:#3985ff}.directory-retry{left:6.25%;bottom:8%}.directory-retry[hidden]{display:none}
+@media(max-width:760px){.directory-scene video,.directory-scene>img{object-position:72% center}.directory-copy{left:24px;top:12%;width:calc(100% - 48px)}.directory-copy h2{font-size:clamp(44px,12vw,68px)}.directory-copy p:last-child{font-size:14px}.directory-label{margin-bottom:20px}.directory-scene:after{background:linear-gradient(180deg,rgba(9,13,21,.65),transparent 60%)}.directory-back{right:24px;top:24px}}
+@media(prefers-reduced-motion:reduce){.directory-scene,.directory-copy{transition:none;transform:none}}
+/* Keep the mobile heading above the face rather than over the portrait crop. */
+@media(max-width:760px){.directory-scene video,.directory-scene>img{top:auto;bottom:0;height:65%;object-position:72% center}.directory-copy{top:12%}.directory-copy h2{font-size:clamp(40px,11vw,58px)}.directory-copy p:last-child{margin-top:16px}.directory-scene:after{background:linear-gradient(180deg,#090d15 0%,transparent 9%);top:35%}}
+
+.directory-next,.portfolio-ending button{position:absolute;z-index:2;right:6.25%;bottom:6%;min-height:44px;padding:10px 18px;border:1px solid #474644;border-radius:24px;background:#171717;color:#faf9f7;font:inherit;font-size:12px;cursor:pointer}
+.directory-next:hover,.portfolio-ending button:hover{border-color:#b7afa1}
+.directory-scene.is-folder-focused .directory-next{visibility:hidden}
+.portfolio-ending{position:fixed;inset:0;z-index:31;overflow:hidden;background:#05070c;color:#f0f3fa;opacity:0;visibility:hidden;transition:opacity .28s ease,visibility 0s .28s}
+.portfolio-ending.is-visible{opacity:1;visibility:visible;transition:opacity .28s ease}
+.portfolio-ending-art{position:absolute;inset:0}
+.portfolio-ending-art :is(img,video){position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.portfolio-ending-art video{background:#05070c}
+.portfolio-ending-mark{position:absolute;top:6%;left:6.25%;margin:0;color:#f0f3fa;font:900 clamp(38px,5.25vw,92px)/1 "Microsoft YaHei","Noto Sans CJK SC",sans-serif;letter-spacing:-.025em;white-space:nowrap;-webkit-text-stroke:.025em currentColor;transform:scaleX(.68);transform-origin:left center;text-shadow:0 2px 16px #05070cbd}
+.portfolio-ending:not(.is-settled) :is(.portfolio-ending-mark,.portfolio-ending-copy h2){opacity:0}
+.portfolio-ending.is-settled :is(.portfolio-ending-mark,.portfolio-ending-copy h2){transition:opacity .9s ease-out}
+.portfolio-ending-copy{position:absolute;inset:auto 0 0;display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:clamp(28px,7vh,86px) 6.25% clamp(24px,5vh,58px);background:linear-gradient(transparent,#05070ccf);pointer-events:none}
+.portfolio-ending-copy p{margin:0;color:#a0a9ba;font-size:12px;letter-spacing:.16em}
+.portfolio-ending-copy h2{margin:0;font-family:Impact,'Arial Narrow',sans-serif;font-size:clamp(32px,5.2vw,92px);font-weight:400;line-height:1}
+.portfolio-ending button{top:6%;bottom:auto}
+@media(max-width:760px){
+ .directory-next{right:24px;bottom:24px}
+ .portfolio-ending button{top:24px;right:24px}
+ .portfolio-ending-mark{top:24px;left:24px;font-size:clamp(29px,8.5vw,48px)}
+ .portfolio-ending-art :is(img,video){object-position:60% center}
+ .portfolio-ending-copy{flex-direction:column;gap:10px;padding:40px 24px max(32px,env(safe-area-inset-bottom))}
+}
+@media(prefers-reduced-motion:reduce){
+ .portfolio-ending,.portfolio-ending.is-visible,.portfolio-ending.is-settled :is(.portfolio-ending-mark,.portfolio-ending-copy h2){transition:none}
+}

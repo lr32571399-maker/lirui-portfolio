@@ -1,0 +1,88 @@
+.works-dialog:has(.ecommerce-stacks) {
+  overflow-x: hidden;
+}
+
+.ecommerce-stacks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 40px;
+}
+
+.ecommerce-stacks figure {
+  margin: 0;
+  min-width: 0;
+  text-align: center;
+}
+
+.ecommerce-stack-stage {
+  display: grid;
+  justify-items: center;
+  padding: 24px 0;
+}
+
+.ecommerce-stack-size {
+  width: min(82%, 290px);
+  aspect-ratio: 1;
+}
+
+.works-detail .ecommerce-stacks .stack-card-content img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: inherit;
+  background: #0d121c;
+  object-fit: contain;
+}
+
+.ecommerce-stacks h4 {
+  margin: 0 0 8px;
+  font-size: clamp(14px, 1.5vw, 19px);
+}
+
+.ecommerce-stacks figcaption p {
+  color: #bcc9de;
+  font-size: 11px;
+  letter-spacing: .14em;
+}
+
+.ecommerce-stacks--details .ecommerce-stack-size {
+  width: min(75%, 238px);
+  aspect-ratio: 9 / 16;
+}
+
+.ecommerce-stacks--details figcaption span {
+  margin-inline-start: .55em;
+  font-variant-numeric: tabular-nums;
+}
+
+.works-dialog .ecommerce-detail-preview-button {
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 4px 16px;
+  background: transparent;
+  font-size: 13px;
+}
+
+.works-dialog .ecommerce-detail-preview-button:hover {
+  border-color: #8eb5ff;
+}
+
+.works-image-preview.is-ecommerce-detail-preview {
+  width: min(94vw, 740px);
+  max-height: 92dvh;
+  overflow: hidden;
+}
+
+.works-image-preview.is-ecommerce-detail-preview img {
+  width: 100%;
+  height: min(calc(92dvh - 76px), calc(94vw * 16 / 9));
+  object-fit: contain;
+}
+
+@media (max-width: 767px) {
+  .ecommerce-stacks {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 28px;
+  }
+}
